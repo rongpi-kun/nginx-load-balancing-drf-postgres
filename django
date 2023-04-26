@@ -1,0 +1,26 @@
+upstream localhost.com {
+  server 127.0.0.1:8100;
+  server 127.0.0.1:8200;
+}
+
+server {
+    listen 80;
+    server_name localhost.com;
+
+    #location / {
+    #	try_files $uri @proxy_to_app;
+    #}
+
+    #location /static/rest_framework/ {
+    #    alias /home/f2p/nginx-simple/venv/lib/python3.10/site-packages/rest_framework/static/rest_framework;
+    #    include /etc/nginx/mime.types;
+    #}
+
+    location / {
+        proxy_pass http://localhost.com;
+        #proxy_set_header Host $host;
+        #proxy_set_header X-Real-IP $remote_addr;
+        #proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+
